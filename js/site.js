@@ -131,10 +131,46 @@ function applyContent(c) {
   setText('[data-contact-hours]', c.contact?.hours);
   setText('[data-footer-text]', c.footer?.text);
 
+  applyWhatsApp(c.contact || {});
   applyLocationOnly(c.contact || {});
 
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
+}
+
+/** Telefon / WhatsApp numarasını wa.me için sadece rakama çevirir */
+function normalizeWhatsAppNumber(raw) {
+  let digits = String(raw || '').replace(/\D/g, '');
+  if (!digits) return '';
+  // Türkiye: 05xx... -> 905xx...
+  if (digits.length === 11 && digits.startsWith('0')) {
+    digits = '90' + digits.slice(1);
+  }
+  // 5xx... (10 hane) -> 905xx...
+  if (digits.length === 10 && digits.startsWith('5')) {
+    digits = '90' + digits;
+  }
+  return digits;
+}
+
+function buildWhatsAppUrl(contact) {
+  const num = normalizeWhatsAppNumber(contact.whatsapp || '');
+  if (!num || num.length < 10) return '';
+  return 'https://wa.me/' + num;
+}
+
+function applyWhatsApp(contact) {
+  const url = buildWhatsAppUrl(contact);
+  const link = document.getElementById('whatsappLink');
+  if (!link) return;
+
+  if (url) {
+    link.href = url;
+    link.hidden = false;
+  } else {
+    link.hidden = true;
+    link.removeAttribute('href');
+  }
 }
 
 function applyLocationOnly(contact) {

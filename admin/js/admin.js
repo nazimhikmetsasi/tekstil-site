@@ -116,6 +116,7 @@ function fillForms() {
   $('#contact_subtitle').value = c.contact.subtitle || '';
   $('#contact_address').value = c.contact.address || '';
   $('#contact_phone').value = c.contact.phone || '';
+  $('#contact_whatsapp').value = c.contact.whatsapp || '';
   $('#contact_email').value = c.contact.email || '';
   $('#contact_hours').value = c.contact.hours || '';
   $('#contact_instagram').value = c.contact.instagram || '';
@@ -306,6 +307,7 @@ function collectFromForms() {
   content.contact.subtitle = $('#contact_subtitle').value;
   content.contact.address = $('#contact_address').value;
   content.contact.phone = $('#contact_phone').value;
+  content.contact.whatsapp = ($('#contact_whatsapp').value || '').trim();
   content.contact.email = $('#contact_email').value;
   content.contact.hours = $('#contact_hours').value;
   content.contact.instagram = $('#contact_instagram').value;

@@ -216,6 +216,22 @@
 
 /* ---- Ortalı iletişim kartı ---- */
 .contact-centered { max-width: 760px; margin: 0 auto; text-align: center; }
+
+/* WhatsApp — iletişim bölümünde yazı linki */
+.whatsapp-link {
+  display: inline-block;
+  margin: 4px 0 28px;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #1fa855;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+.whatsapp-link:hover { color: #178c45; }
+.whatsapp-link[hidden] { display: none !important; }
+
 .contact-info-row {
   display: flex;
   justify-content: center;
