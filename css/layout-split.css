@@ -1,0 +1,227 @@
+/* =========================================================
+   ŞABLON 1 — "Modern Split" — Aynı bakır/sıcak renk tonları,
+   farklı ve daha modern bir yerleşim (split hero, bento grid,
+   masonry galeri, ortalı iletişim kartı).
+   ========================================================= */
+
+/* ---- Header her zaman katı (hero artık koyu değil) ---- */
+.site-header.always-solid {
+  background: rgba(250, 248, 244, 0.97);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  backdrop-filter: blur(8px);
+}
+.site-header.always-solid .logo-text,
+.site-header.always-solid .nav-link,
+.site-header.always-solid .lang-toggle { color: var(--color-dark) !important; }
+.site-header.always-solid .menu-toggle span { background: var(--color-dark) !important; }
+
+/* ---- Split Hero ---- */
+.hero-split {
+  padding: 168px 0 100px;
+  background: var(--color-light);
+  overflow: hidden;
+}
+.hero-split-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 60px;
+  align-items: center;
+}
+.hero-split-text .eyebrow { color: var(--color-accent); }
+.hero-split-text h1 {
+  font-size: 3rem;
+  line-height: 1.15;
+  color: var(--color-dark);
+  margin-bottom: 20px;
+}
+.hero-split-text .hero-sub {
+  color: var(--color-muted);
+  max-width: 480px;
+  margin-bottom: 32px;
+}
+.hero-split-visual { position: relative; }
+.hero-visual-card {
+  aspect-ratio: 4/5;
+  border-radius: 14px;
+  background: repeating-linear-gradient(135deg, #eee6d8 0, #eee6d8 12px, #e6dcc9 12px, #e6dcc9 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.hero-floating-badge {
+  position: absolute;
+  bottom: -26px;
+  left: -26px;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 20px 26px;
+  border-radius: 12px;
+  box-shadow: 0 18px 36px rgba(147, 97, 59, 0.32);
+}
+.hero-floating-badge strong { display: block; font-family: var(--font-heading); font-size: 1.9rem; }
+.hero-floating-badge span { font-size: 0.75rem; opacity: 0.9; }
+
+/* ---- Bento ürün grid ---- */
+.product-grid-bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+.product-grid-bento .product-card.featured {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.product-grid-bento .product-card.featured .product-icon { font-size: 3rem; }
+.product-grid-bento .product-card.featured h3 { font-size: 1.5rem; }
+
+/* ---- Masonry galeri (CSS columns) ---- */
+.gallery-grid-masonry {
+  column-count: 4;
+  column-gap: 18px;
+}
+.gallery-item-m {
+  margin-bottom: 18px;
+  border-radius: 10px;
+  break-inside: avoid;
+  background: repeating-linear-gradient(135deg, #eee6d8 0, #eee6d8 12px, #e6dcc9 12px, #e6dcc9 24px);
+  display: flex;
+  align-items: flex-end;
+  padding: 14px;
+  color: var(--color-muted);
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+.gallery-item-m.h-sm { height: 160px; }
+.gallery-item-m.h-md { height: 220px; }
+.gallery-item-m.h-lg { height: 290px; }
+.gallery-item-m::before {
+  content: attr(data-caption);
+  position: absolute;
+  inset: 0;
+  background: rgba(28,26,23,0.72);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 12px;
+  opacity: 0;
+  transition: var(--transition);
+}
+.gallery-item-m:hover::before { opacity: 1; }
+
+/* ---- Ortalı iletişim kartı ---- */
+.contact-centered { max-width: 760px; margin: 0 auto; text-align: center; }
+.contact-info-row {
+  display: flex;
+  justify-content: center;
+  gap: 34px;
+  flex-wrap: wrap;
+  margin: 32px 0 46px;
+}
+.contact-info-row .info-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+.contact-form-card {
+  background: var(--color-cream);
+  padding: 48px;
+  border-radius: 16px;
+  text-align: left;
+}
+
+/* ---- Konum kartı (tıklanınca haritaya gider) ---- */
+.location-card {
+  display: block;
+  max-width: 760px;
+  margin: 0 auto 40px;
+  background: #fff;
+  border: 1px solid rgba(28,26,23,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+}
+.location-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(177,122,79,0.18);
+}
+.location-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  text-align: left;
+}
+.location-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: rgba(177,122,79,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+.location-text { flex: 1; min-width: 0; }
+.location-text strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--color-dark);
+  margin-bottom: 3px;
+}
+.location-text span {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.location-arrow {
+  font-size: 1.4rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+.location-map-wrap {
+  position: relative;
+  height: 220px;
+  background: var(--color-cream);
+  pointer-events: none; /* tıklama üst linke gider */
+}
+.location-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  filter: grayscale(0.15);
+}
+.location-map-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(28,26,23,0.08) 100%);
+}
+
+@media (max-width: 900px) {
+  .hero-split-inner { grid-template-columns: 1fr; }
+  .hero-split { padding: 150px 0 60px; }
+  .hero-floating-badge { left: 0; }
+  .product-grid-bento { grid-template-columns: 1fr; }
+  .product-grid-bento .product-card.featured { grid-column: span 1; }
+  .gallery-grid-masonry { column-count: 2; }
+  .contact-form-card { padding: 28px; }
+}

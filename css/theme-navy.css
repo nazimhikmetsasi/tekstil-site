@@ -1,0 +1,57 @@
+/* =========================================================
+   TEMA C — "Lacivert Kurumsal" — Ciddi, kurumsal, yapılandırılmış mavi
+   ========================================================= */
+
+:root {
+  --color-dark: #0d1b3e;
+  --color-dark-soft: #14295c;
+  --color-light: #f5f7fb;
+  --color-cream: #e9edf7;
+  --color-accent: #3457d5;
+  --color-accent-dark: #24409f;
+  --color-sage: #3457d5;
+  --color-text: #1f2b47;
+  --color-muted: #5b6a8c;
+  --font-heading: 'Manrope', sans-serif;
+}
+
+h1, h2, h3 { font-weight: 700; }
+
+.hero-bg {
+  background: linear-gradient(135deg, #0d1b3e 0%, #14295c 60%, #24409f 100%);
+}
+.hero-bg::after {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.btn {
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+}
+
+.logo-mark { border-radius: 2px; }
+
+.eyebrow { letter-spacing: 0.22em; }
+
+.product-card {
+  border-radius: 2px;
+  border: 1px solid rgba(13,27,62,0.08);
+  border-top: 3px solid var(--color-accent);
+  box-shadow: none;
+}
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(52,87,213,0.12);
+}
+
+.about-image, .gallery-item, .contact-form, .about-badge { border-radius: 2px; }
+
+.form-group input, .form-group textarea { border-radius: 2px; }
+
+.social-links a, .to-top { border-radius: 2px; }
+.contact-icon { border-radius: 2px; }

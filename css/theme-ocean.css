@@ -1,0 +1,49 @@
+/* =========================================================
+   TEMA A — "Okyanus" — Modern, sade, teknoloji hissi veren mavi tonlar
+   ========================================================= */
+
+:root {
+  --color-dark: #0b1220;
+  --color-dark-soft: #16233d;
+  --color-light: #f6f9fc;
+  --color-cream: #eaf1fb;
+  --color-accent: #2f6fed;
+  --color-accent-dark: #1f52c4;
+  --color-sage: #2f6fed;
+  --color-text: #1c2733;
+  --color-muted: #5c6b7d;
+  --font-heading: 'Space Grotesk', sans-serif;
+}
+
+.hero .eyebrow { color: #8fb2f7; }
+
+.hero-bg {
+  background: linear-gradient(160deg, #0b1220 0%, #16233d 55%, #1f52c4 100%);
+}
+.hero-bg::after {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1.5px);
+  background-size: 26px 26px;
+}
+
+.logo-mark { border-radius: 8px; }
+
+.btn { border-radius: 3px; }
+
+.product-card, .about-image, .contact-form, .about-badge { border-radius: 4px; }
+.gallery-item { border-radius: 4px; }
+
+.product-card {
+  border: 1px solid rgba(11,18,32,0.06);
+  box-shadow: none;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(47,111,237,0.14);
+  border-color: var(--color-accent);
+}
+
+.form-group input, .form-group textarea { border-radius: 3px; }
+
+.social-links a { border-radius: 6px; }
+
+.to-top { border-radius: 6px; }

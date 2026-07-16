@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Paneli | Anadolu Tekstil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/admin/css/admin.css">
+</head>
+<body>
+
+<!-- LOGIN -->
+<section id="loginView" class="login-page">
+  <div class="login-card">
+    <div class="logo">
+      <span class="logo-mark">AT</span>
+      <span class="logo-text">Anadolu <em>Tekstil</em></span>
+    </div>
+    <h1>Admin Paneli</h1>
+    <p class="hint">Site içeriklerini buradan yönetin. Kod yazmanıza gerek yok.</p>
+    <div class="error-msg" id="loginError"></div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="username">Kullanıcı adı</label>
+        <input type="text" id="username" value="admin" required autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="password">Şifre</label>
+        <input type="password" id="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn btn-primary">Giriş Yap</button>
+    </form>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section id="adminView" class="admin-shell hidden">
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="logo-mark">AT</span>
+      <span class="logo-text">Admin <em>Panel</em></span>
+    </div>
+    <nav>
+      <button class="nav-item active" data-panel="hero">Anasayfa / Hero</button>
+      <button class="nav-item" data-panel="about">Hakkımızda</button>
+      <button class="nav-item" data-panel="products">Ürünler</button>
+      <button class="nav-item" data-panel="gallery">Galeri</button>
+      <button class="nav-item" data-panel="contact">İletişim</button>
+    </nav>
+    <div>
+      <a class="btn btn-ghost btn-sm" href="/" target="_blank" style="color:#fff;border-color:rgba(255,255,255,.25);width:100%;margin-bottom:8px;">Siteyi Gör</a>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn" style="color:#fff;border-color:rgba(255,255,255,.25);width:100%;">Çıkış</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1 id="panelTitle">Anasayfa / Hero</h1>
+      <div class="actions">
+        <button class="btn btn-primary" id="saveBtn">Değişiklikleri Kaydet</button>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="panel active" id="panel-hero">
+      <div class="card">
+        <h2>Hero metinleri</h2>
+        <div class="grid-2">
+          <div class="form-group"><label>Üst yazı</label><input id="hero_eyebrow"></div>
+          <div class="form-group"><label>Rozet (örn. 26+)</label><input id="hero_badgeYears"></div>
+          <div class="form-group full"><label>Başlık (HTML: &lt;br&gt; kullanabilirsiniz)</label><input id="hero_title"></div>
+          <div class="form-group full"><label>Açıklama</label><textarea id="hero_subtitle" rows="3"></textarea></div>
+          <div class="form-group"><label>Buton 1</label><input id="hero_btnContact"></div>
+          <div class="form-group"><label>Buton 2</label><input id="hero_btnProducts"></div>
+          <div class="form-group"><label>Rozet yazısı</label><input id="hero_badgeLabel"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Hero görseli</h2>
+        <div class="upload-actions">
+          <label class="upload-box" for="heroUpload">
+            <strong>Fotoğraf yükle</strong>
+            <span>JPG, PNG veya WEBP — max 8 MB</span>
+          </label>
+          <input type="file" id="heroUpload" accept="image/*" class="hidden">
+          <img id="heroPreview" class="preview-img hidden" alt="Hero önizleme">
+          <button type="button" class="btn btn-ghost btn-sm" id="heroClear">Görseli kaldır</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="panel" id="panel-about">
+      <div class="card">
+        <h2>Hakkımızda metinleri</h2>
+        <div class="grid-2">
+          <div class="form-group"><label>Üst yazı</label><input id="about_eyebrow"></div>
+          <div class="form-group full"><label>Başlık</label><input id="about_title"></div>
+          <div class="form-group full"><label>Metin</label><textarea id="about_text" rows="5"></textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>İstatistikler</h2>
+        <div class="grid-2" id="statsFields"></div>
+      </div>
+      <div class="card">
+        <h2>Hakkımızda görseli</h2>
+        <div class="upload-actions">
+          <label class="upload-box" for="aboutUpload">
+            <strong>Fotoğraf yükle</strong>
+            <span>JPG, PNG veya WEBP — max 8 MB</span>
+          </label>
+          <input type="file" id="aboutUpload" accept="image/*" class="hidden">
+          <img id="aboutPreview" class="preview-img hidden" alt="Hakkımızda önizleme">
+          <button type="button" class="btn btn-ghost btn-sm" id="aboutClear">Görseli kaldır</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="panel" id="panel-products">
+      <div class="card">
+        <h2>Bölüm başlıkları</h2>
+        <div class="grid-2">
+          <div class="form-group"><label>Üst yazı</label><input id="products_eyebrow"></div>
+          <div class="form-group"><label>Başlık</label><input id="products_title"></div>
+          <div class="form-group full"><label>Açıklama</label><textarea id="products_subtitle" rows="2"></textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="head" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+          <h2 style="margin:0;">Ürün listesi</h2>
+          <button type="button" class="btn btn-primary btn-sm" id="addProduct">+ Ürün Ekle</button>
+        </div>
+        <div id="productsList"></div>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="panel" id="panel-gallery">
+      <div class="card">
+        <h2>Bölüm başlıkları</h2>
+        <div class="grid-2">
+          <div class="form-group"><label>Üst yazı</label><input id="gallery_eyebrow"></div>
+          <div class="form-group"><label>Başlık</label><input id="gallery_title"></div>
+          <div class="form-group full"><label>Açıklama</label><textarea id="gallery_subtitle" rows="2"></textarea></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Galeri fotoğrafları</h2>
+        <div class="upload-actions">
+          <label class="upload-box" for="galleryUpload">
+            <strong>Fotoğraf ekle</strong>
+            <span>Birden fazla seçebilirsiniz</span>
+          </label>
+          <input type="file" id="galleryUpload" accept="image/*" multiple class="hidden">
+        </div>
+        <div class="media-grid" id="galleryGrid"></div>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="panel" id="panel-contact">
+      <div class="card">
+        <h2>İletişim bilgileri</h2>
+        <div class="grid-2">
+          <div class="form-group"><label>Üst yazı</label><input id="contact_eyebrow"></div>
+          <div class="form-group full"><label>Başlık</label><input id="contact_title"></div>
+          <div class="form-group full"><label>Açıklama</label><textarea id="contact_subtitle" rows="2"></textarea></div>
+          <div class="form-group full"><label>Adres</label><input id="contact_address"></div>
+          <div class="form-group"><label>Telefon</label><input id="contact_phone"></div>
+          <div class="form-group"><label>E-posta</label><input id="contact_email"></div>
+          <div class="form-group full"><label>Çalışma saatleri</label><input id="contact_hours"></div>
+          <div class="form-group"><label>Instagram linki</label><input id="contact_instagram"></div>
+          <div class="form-group"><label>LinkedIn linki</label><input id="contact_linkedin"></div>
+          <div class="form-group"><label>Facebook linki</label><input id="contact_facebook"></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Konum (Harita) — Önemli</h2>
+        <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px;">
+          En doğru yöntem: <strong>enlem (lat)</strong> ve <strong>boylam (lng)</strong> girin.
+          Telefonda “Haritalar’da aç” pin ile o noktaya gider. share.google kısa linkleri telefonda genelde pinsiz açılır — kullanmayın.
+        </p>
+        <div class="grid-2">
+          <div class="form-group">
+            <label>Enlem (latitude)</label>
+            <input id="contact_lat" placeholder="40.2215" inputmode="decimal">
+          </div>
+          <div class="form-group">
+            <label>Boylam (longitude)</label>
+            <input id="contact_lng" placeholder="28.8705" inputmode="decimal">
+          </div>
+          <div class="form-group full">
+            <label>Buton yazısı</label>
+            <input id="contact_mapLabel" placeholder="Haritada Göster / Yol Tarifi">
+          </div>
+          <div class="form-group full">
+            <label>Manuel harita linki (opsiyonel — lat/lng boşsa kullanılır)</label>
+            <input id="contact_mapUrl" placeholder="https://www.google.com/maps/search/?api=1&query=40.2215,28.8705">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Footer</h2>
+        <div class="form-group"><label>Footer metni</label><textarea id="footer_text" rows="2"></textarea></div>
+        <div class="grid-2">
+          <div class="form-group"><label>Marka adı</label><input id="site_brand"></div>
+          <div class="form-group"><label>Logo kısaltması</label><input id="site_logoMark"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<div class="toast" id="toast"></div>
+<script src="/admin/js/admin.js"></script>
+</body>
+</html>

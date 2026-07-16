@@ -1,0 +1,113 @@
+{
+  "site": {
+    "brand": "Anadolu Tekstil",
+    "logoMark": "AT"
+  },
+  "hero": {
+    "eyebrow": "1998'DEN BUGÜNE",
+    "title": "Kumaşta Kalite,<br>Üretimde Güven",
+    "subtitle": "Pamuklu, örme ve dokuma kumaş üretiminde deneyim, sürdürülebilirlik ve titiz kalite kontrolünü bir araya getiriyoruz.",
+    "btnContact": "Bize Ulaşın",
+    "btnProducts": "Ürünlerimiz",
+    "image": "",
+    "badgeYears": "26+",
+    "badgeLabel": "Yıllık Tecrübe"
+  },
+  "about": {
+    "eyebrow": "HAKKIMIZDA",
+    "title": "Tekstilde Nesiller Boyu Süren Ustalık",
+    "text": "Anadolu Tekstil, 1998 yılından itibaren yerli ve yabancı markalara yüksek kaliteli kumaş üretimi sunmaktadır. Modern makine parkurumuz ve deneyimli ekibimizle; pamuklu, örme, dokuma ve karışım kumaşlarda müşterilerimizin ihtiyaçlarına özel çözümler geliştiriyoruz. Sürdürülebilir üretim anlayışımız ve sıkı kalite kontrol süreçlerimizle sektörde güvenilir bir tedarikçi olmayı sürdürüyoruz.",
+    "image": "",
+    "stats": [
+      {
+        "value": 26,
+        "label": "Yıllık Tecrübe"
+      },
+      {
+        "value": 150,
+        "label": "Çalışan"
+      },
+      {
+        "value": 40,
+        "label": "İhracat Ülkesi"
+      },
+      {
+        "value": 500,
+        "label": "Kurumsal Müşteri"
+      }
+    ]
+  },
+  "products": {
+    "eyebrow": "ÜRÜN & HİZMETLERİMİZ",
+    "title": "Neler Üretiyoruz",
+    "subtitle": "Geniş ürün yelpazemizle her sektörün ihtiyacına uygun kumaş çözümleri sunuyoruz.",
+    "items": [
+      {
+        "id": "p1",
+        "icon": "🧶",
+        "title": "Pamuklu Kumaşlar",
+        "text": "Nefes alabilen, yumuşak dokulu, hazır giyim ve ev tekstili için ideal pamuklu kumaş çeşitleri.",
+        "featured": true,
+        "image": ""
+      },
+      {
+        "id": "p2",
+        "icon": "🧵",
+        "title": "Örme Kumaşlar",
+        "text": "Esnek yapılı, konforlu ve dayanıklı örme kumaşlarımızla spor ve günlük giyim koleksiyonlarına destek.",
+        "featured": false,
+        "image": ""
+      },
+      {
+        "id": "p3",
+        "icon": "🪢",
+        "title": "Dokuma Kumaşlar",
+        "text": "Yüksek mukavemetli, şık görünümlü dokuma kumaşlar ile klasik ve modern koleksiyonlar için çözümler.",
+        "featured": false,
+        "image": ""
+      },
+      {
+        "id": "p4",
+        "icon": "🏠",
+        "title": "Ev Tekstili",
+        "text": "Nevresim, perde ve döşemelik kumaş üretiminde konfor ve estetiği bir araya getiriyoruz.",
+        "featured": false,
+        "image": ""
+      },
+      {
+        "id": "p5",
+        "icon": "🎨",
+        "title": "Özel Tasarım & Baskı",
+        "text": "Markanıza özel renk, desen ve baskı çözümleriyle fark yaratan koleksiyonlar tasarlıyoruz.",
+        "featured": false,
+        "image": ""
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "GALERİ",
+    "title": "Üretimden Kareler",
+    "subtitle": "Tesisimizden ve ürünlerimizden görseller.",
+    "items": []
+  },
+  "contact": {
+    "eyebrow": "İLETİŞİM",
+    "title": "Bizimle İletişime Geçin",
+    "subtitle": "Sorularınız ve iş birliği teklifleriniz için aşağıdaki bilgilerden veya formdan bize ulaşabilirsiniz.",
+    "address": "Ulutek Teknopark, Görükle, Bursa / Türkiye",
+    "phone": "+90 (224) 000 00 00",
+    "email": "info@anadolutekstil.com",
+    "hours": "Pazartesi - Cuma, 08:30 - 18:00",
+    "lat": "40.2215",
+    "lng": "28.8705",
+    "mapUrl": "https://www.google.com/maps/search/?api=1&query=40.2215,28.8705",
+    "mapEmbed": "https://www.google.com/maps?q=40.2215,28.8705&z=16&output=embed",
+    "mapLabel": "Haritada Göster / Yol Tarifi",
+    "instagram": "#",
+    "linkedin": "#",
+    "facebook": "#"
+  },
+  "footer": {
+    "text": "Kumaşta kalite ve güveni bir arada sunan köklü tekstil markası."
+  }
+}

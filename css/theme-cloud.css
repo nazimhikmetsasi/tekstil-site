@@ -1,0 +1,63 @@
+/* =========================================================
+   TEMA B — "Bulut" — Çok sade, ferah, açık mavi/beyaz minimal
+   ========================================================= */
+
+:root {
+  --color-dark: #101828;
+  --color-dark-soft: #1c2a41;
+  --color-light: #ffffff;
+  --color-cream: #f7f9fc;
+  --color-accent: #0ea5e9;
+  --color-accent-dark: #0284c7;
+  --color-sage: #0ea5e9;
+  --color-text: #344054;
+  --color-muted: #667085;
+  --font-heading: 'Inter', sans-serif;
+}
+
+h1, h2, h3 { font-weight: 700; letter-spacing: -0.01em; }
+
+/* ---- Açık / beyaz hero ---- */
+.hero { color: var(--color-text); }
+.hero-bg {
+  background: linear-gradient(180deg, #ffffff 0%, #eaf6fd 100%);
+}
+.hero-bg::after { display: none; }
+.hero .eyebrow { color: var(--color-accent); }
+.hero h1 { color: var(--color-dark); }
+.hero-sub { color: var(--color-muted); }
+
+.btn { border-radius: 999px; }
+.btn-ghost { border-color: rgba(16,24,40,0.25); color: var(--color-dark); }
+.btn-ghost:hover { background: rgba(16,24,40,0.05); }
+
+.scroll-down { border-color: rgba(16,24,40,0.25); }
+.scroll-down span { background: var(--color-dark); }
+
+.site-header:not(.scrolled) .logo-text,
+.site-header:not(.scrolled) .nav-link,
+.site-header:not(.scrolled) .lang-toggle {
+  color: var(--color-dark) !important;
+}
+.site-header:not(.scrolled) .menu-toggle span {
+  background: var(--color-dark) !important;
+}
+
+/* ---- Kartlar: kenarlıksız, yumuşak gölge ---- */
+.product-card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 2px 14px rgba(16,24,40,0.06);
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px rgba(16,24,40,0.10);
+}
+
+.about-image, .gallery-item { border-radius: 14px; }
+.contact-form { border-radius: 16px; box-shadow: 0 2px 20px rgba(16,24,40,0.06); }
+.about-badge { border-radius: 14px; }
+
+.form-group input, .form-group textarea { border-radius: 10px; }
+
+.social-links a, .to-top, .contact-icon { border-radius: 50%; }

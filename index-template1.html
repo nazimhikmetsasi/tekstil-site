@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anadolu Tekstil | Kaliteli Kumaş ve Tekstil Ürünleri</title>
+<meta name="description" content="Anadolu Tekstil - Pamuklu, örme ve dokuma kumaş üretiminde 20 yılı aşan deneyim.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧵</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/layout-split.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header always-solid" id="header">
+  <div class="container header-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark" data-logo-mark>AT</span>
+      <span class="logo-text" data-logo-text>Anadolu <em>Tekstil</em></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <ul>
+        <li><a href="#home" class="nav-link active">Anasayfa</a></li>
+        <li><a href="#about" class="nav-link">Hakkımızda</a></li>
+        <li><a href="#products" class="nav-link">Ürünler</a></li>
+        <li><a href="#gallery" class="nav-link">Galeri</a></li>
+        <li><a href="#contact" class="nav-link">İletişim</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button class="menu-toggle" id="menuToggle" aria-label="Menü">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO (SPLIT) ===== -->
+<section class="hero-split" id="home">
+  <div class="container hero-split-inner">
+    <div class="hero-split-text">
+      <p class="eyebrow fade-in" data-hero-eyebrow>1998'DEN BUGÜNE</p>
+      <h1 class="fade-in" data-hero-title>Kumaşta Kalite,<br>Üretimde Güven</h1>
+      <p class="hero-sub fade-in" data-hero-subtitle>Pamuklu, örme ve dokuma kumaş üretiminde deneyim, sürdürülebilirlik ve titiz kalite kontrolünü bir araya getiriyoruz.</p>
+      <div class="hero-cta fade-in">
+        <a href="#contact" class="btn btn-primary" data-hero-btn-contact>Bize Ulaşın</a>
+        <a href="#products" class="btn" style="border:1px solid rgba(28,26,23,.2); color:var(--color-dark);" data-hero-btn-products>Ürünlerimiz</a>
+      </div>
+    </div>
+    <div class="hero-split-visual fade-in">
+      <div class="hero-visual-card" data-hero-image>Fabrika Görseli</div>
+      <div class="hero-floating-badge">
+        <strong data-hero-badge-years>26+</strong>
+        <span data-hero-badge-label>Yıllık Tecrübe</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-visual fade-in">
+      <div class="about-image">
+        <div class="placeholder-block" data-about-image>
+          <svg viewBox="0 0 24 24" width="48" height="48"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1" opacity=".4"/></svg>
+          <span>Fabrika Görseli</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <p class="eyebrow fade-in" data-about-eyebrow>HAKKIMIZDA</p>
+      <h2 class="fade-in" data-about-title>Tekstilde Nesiller Boyu Süren Ustalık</h2>
+      <p class="fade-in" data-about-text>Anadolu Tekstil, 1998 yılından itibaren yerli ve yabancı markalara yüksek kaliteli kumaş üretimi sunmaktadır.</p>
+
+      <div class="stats fade-in" data-stats>
+        <div class="stat-item"><strong data-count="26">0</strong><span>Yıllık Tecrübe</span></div>
+        <div class="stat-item"><strong data-count="150">0</strong><span>Çalışan</span></div>
+        <div class="stat-item"><strong data-count="40">0</strong><span>İhracat Ülkesi</span></div>
+        <div class="stat-item"><strong data-count="500">0</strong><span>Kurumsal Müşteri</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS (BENTO) ===== -->
+<section class="products" id="products">
+  <div class="container">
+    <p class="eyebrow center fade-in" data-products-eyebrow>ÜRÜN &amp; HİZMETLERİMİZ</p>
+    <h2 class="section-title center fade-in" data-products-title>Neler Üretiyoruz</h2>
+    <p class="section-sub center fade-in" data-products-subtitle>Geniş ürün yelpazemizle her sektörün ihtiyacına uygun kumaş çözümleri sunuyoruz.</p>
+    <div class="product-grid-bento" data-products></div>
+  </div>
+</section>
+
+<!-- ===== GALLERY (MASONRY) ===== -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <p class="eyebrow center fade-in" data-gallery-eyebrow>GALERİ</p>
+    <h2 class="section-title center fade-in" data-gallery-title>Üretimden Kareler</h2>
+    <p class="section-sub center fade-in" data-gallery-subtitle>Tesisimizden ve ürünlerimizden görseller.</p>
+    <div class="gallery-grid-masonry" data-gallery></div>
+  </div>
+</section>
+
+<!-- ===== CONTACT (CENTERED) ===== -->
+<section class="contact" id="contact">
+  <div class="container contact-centered">
+    <p class="eyebrow" data-contact-eyebrow>İLETİŞİM</p>
+    <h2 data-contact-title>Bizimle İletişime Geçin</h2>
+    <p class="section-sub" style="margin:0 auto;" data-contact-subtitle>Sorularınız ve iş birliği teklifleriniz için bize ulaşabilirsiniz.</p>
+
+    <div class="contact-info-row">
+      <span class="info-pill">📍 <span data-contact-address>Organize Sanayi Bölgesi, Bursa</span></span>
+      <span class="info-pill">📞 <span data-contact-phone>+90 (224) 000 00 00</span></span>
+      <span class="info-pill">✉️ <span data-contact-email>info@anadolutekstil.com</span></span>
+    </div>
+
+    <!-- KONUM — tıklanınca Google Haritalar'a gider -->
+    <a class="location-card fade-in" id="locationCard" href="https://www.google.com/maps/search/?api=1&query=40.2215,28.8705" target="_blank" rel="noopener noreferrer">
+      <div class="location-card-inner">
+        <div class="location-icon">📍</div>
+        <div class="location-text">
+          <strong data-contact-map-label>Haritada Göster / Yol Tarifi</strong>
+          <span data-contact-address>Organize Sanayi Bölgesi, Bursa</span>
+        </div>
+        <div class="location-arrow">→</div>
+      </div>
+      <div class="location-map-wrap">
+        <iframe id="mapEmbed" title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Organize+Sanayi+Bölgesi,+Bursa&output=embed"></iframe>
+        <div class="location-map-overlay" aria-hidden="true"></div>
+      </div>
+    </a>
+
+    <form class="contact-form-card fade-in" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Ad Soyad</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-posta</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subject">Konu</label>
+        <input type="text" id="subject" name="subject">
+      </div>
+      <div class="form-group">
+        <label for="message">Mesajınız</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
+      <p class="form-note">* Bu form şu an demo amaçlıdır. Gönderim aktif hale getirilecektir.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark" data-logo-mark>AT</span>
+      <span class="logo-text" data-logo-text>Anadolu <em>Tekstil</em></span>
+      <p data-footer-text>Kumaşta kalite ve güveni bir arada sunan köklü tekstil markası.</p>
+    </div>
+    <nav class="footer-nav">
+      <a href="#home">Anasayfa</a>
+      <a href="#about">Hakkımızda</a>
+      <a href="#products">Ürünler</a>
+      <a href="#gallery">Galeri</a>
+      <a href="#contact">İletişim</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; <span id="year"></span> <span data-brand>Anadolu Tekstil</span>. Tüm hakları saklıdır.</p>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Yukarı çık">↑</button>
+
+<script src="/js/script.js"></script>
+<script src="/js/site.js"></script>
+</body>
+</html>
