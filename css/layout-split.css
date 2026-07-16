@@ -112,8 +112,10 @@
 }
 .product-grid-bento .product-card {
   position: relative;
-  background: linear-gradient(135deg, #fff 0%, #f7f1e8 100%);
-  border: 1px solid rgba(28, 26, 23, 0.08);
+  /* Açık krem — beyaza yakın, hafif sıcak ton */
+  background: #fcfaf6;
+  background-image: none;
+  border: 1px solid rgba(177, 122, 79, 0.14);
   border-radius: 2px;
   box-shadow: none;
   padding: 36px 32px 32px;
@@ -165,6 +167,8 @@
   flex-direction: column;
   justify-content: center;
   padding: 44px 40px;
+  background: #fcfaf6;
+  background-image: none;
 }
 .product-grid-bento .product-card.featured h3 { font-size: 1.55rem; }
 
