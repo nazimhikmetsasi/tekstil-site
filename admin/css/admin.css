@@ -9,8 +9,8 @@
   --border: rgba(28,26,23,0.10);
   --danger: #c0392b;
   --ok: #2e7d4f;
-  --font: 'Inter', system-ui, sans-serif;
-  --heading: 'Playfair Display', Georgia, serif;
+  --font: 'Figtree', system-ui, sans-serif;
+  --heading: 'Cormorant Garamond', Georgia, serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,23 +25,27 @@ body {
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
 
-/* ---- Login ---- */
+/* ---- Login (ortalı, sade) ---- */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: linear-gradient(135deg, #1c1a17 0%, #2c2822 55%, #93613b 100%);
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(177,122,79,0.22), transparent 55%),
+    linear-gradient(160deg, #1c1a17 0%, #2a2620 55%, #3a2d22 100%);
 }
 
 .login-card {
   width: 100%;
-  max-width: 400px;
-  background: var(--light);
-  border-radius: 14px;
-  padding: 40px 32px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  max-width: 380px;
+  background: #faf7f1;
+  border-radius: 4px;
+  padding: 40px 32px 36px;
+  border-top: 3px solid var(--accent);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.28);
+  animation: loginIn 0.55s ease both;
 }
 
 .login-card .logo {
@@ -49,6 +53,7 @@ button, input, textarea, select { font: inherit; }
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
+  animation: loginFade 0.5s ease 0.08s both;
 }
 
 .logo-mark {
@@ -63,7 +68,7 @@ button, input, textarea, select { font: inherit; }
 
 .logo-text {
   font-family: var(--heading);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   color: var(--dark);
 }
 
@@ -71,12 +76,70 @@ button, input, textarea, select { font: inherit; }
 
 .login-card h1 {
   font-family: var(--heading);
-  font-size: 1.5rem;
-  margin: 18px 0 6px;
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin: 20px 0 6px;
   color: var(--dark);
+  animation: loginFade 0.5s ease 0.14s both;
 }
 
-.login-card .hint { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+.login-card .hint {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+  animation: loginFade 0.5s ease 0.2s both;
+}
+
+.login-card #loginForm {
+  animation: loginFade 0.5s ease 0.26s both;
+}
+
+.login-card .form-group input {
+  border-radius: 2px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-card .btn-primary {
+  border-radius: 2px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.login-card .btn-primary:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes loginIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loginFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-card,
+  .login-card .logo,
+  .login-card h1,
+  .login-card .hint,
+  .login-card #loginForm {
+    animation: none;
+  }
+  .login-card .btn-primary:hover { transform: none; }
+}
 
 .form-group { margin-bottom: 16px; }
 .form-group label {
