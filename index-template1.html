@@ -48,8 +48,8 @@
       <h1 class="fade-in" data-hero-title>Kumaşta Kalite,<br>Üretimde Güven</h1>
       <p class="hero-sub fade-in" data-hero-subtitle>Pamuklu, örme ve dokuma kumaş üretiminde deneyim, sürdürülebilirlik ve titiz kalite kontrolünü bir araya getiriyoruz.</p>
       <div class="hero-cta fade-in">
-        <a href="#contact" class="btn btn-primary" data-hero-btn-contact>Bize Ulaşın</a>
-        <a href="#products" class="btn" style="border:1px solid rgba(28,26,23,.2); color:var(--color-dark);" data-hero-btn-products>Ürünlerimiz</a>
+        <a href="#contact" class="btn-link btn-link-primary" data-hero-btn-contact>Bize Ulaşın</a>
+        <a href="#products" class="btn-link btn-link-secondary" data-hero-btn-products>Ürünlerimiz</a>
       </div>
     </div>
     <div class="hero-split-visual fade-in">
@@ -122,45 +122,27 @@
       <span class="info-pill">✉️ <span data-contact-email>info@anadolutekstil.com</span></span>
     </div>
 
-    <!-- KONUM — tıklanınca Google Haritalar'a gider -->
-    <a class="location-card fade-in" id="locationCard" href="https://www.google.com/maps/search/?api=1&query=40.2215,28.8705" target="_blank" rel="noopener noreferrer">
+    <!-- KONUM — panelden yazılan konuma gider (sabit değil) -->
+    <a class="location-card fade-in" id="locationCard"
+       href="https://www.google.com/maps/search/?api=1&query=40.23325,28.98644"
+       data-fallback-query="bağlarbaşı bursa"
+       data-maps-url="https://www.google.com/maps/search/?api=1&query=40.23325,28.98644"
+       target="_blank" rel="noopener noreferrer">
       <div class="location-card-inner">
         <div class="location-icon">📍</div>
         <div class="location-text">
           <strong data-contact-map-label>Haritada Göster / Yol Tarifi</strong>
-          <span data-contact-address>Organize Sanayi Bölgesi, Bursa</span>
+          <span data-contact-map-query data-fallback="bağlarbaşı bursa">bağlarbaşı bursa</span>
         </div>
         <div class="location-arrow">→</div>
       </div>
       <div class="location-map-wrap">
         <iframe id="mapEmbed" title="Konum haritası" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps?q=Organize+Sanayi+Bölgesi,+Bursa&output=embed"></iframe>
+          src="https://maps.google.com/maps?q=40.23325,28.98644&z=16&output=embed"></iframe>
         <div class="location-map-overlay" aria-hidden="true"></div>
       </div>
     </a>
 
-    <form class="contact-form-card fade-in" id="contactForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Ad Soyad</label>
-          <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">E-posta</label>
-          <input type="email" id="email" name="email" required>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="subject">Konu</label>
-        <input type="text" id="subject" name="subject">
-      </div>
-      <div class="form-group">
-        <label for="message">Mesajınız</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Mesaj Gönder</button>
-      <p class="form-note">* Bu form şu an demo amaçlıdır. Gönderim aktif hale getirilecektir.</p>
-    </form>
   </div>
 </section>
 

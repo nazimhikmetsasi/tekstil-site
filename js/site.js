@@ -2,13 +2,29 @@
 
 async function loadSite() {
   try {
-    const res = await fetch('/api/content');
+    const res = await fetch('/api/content', { cache: 'no-store' });
     if (!res.ok) throw new Error('İçerik yüklenemedi');
     const c = await res.json();
     applyContent(c);
   } catch (e) {
     console.warn(e);
+    // API yoksa bile konum kartını boş bırakma
+    applyLocationFallback();
   }
+}
+
+function applyLocationFallback() {
+  const card = document.getElementById('locationCard');
+  const queryEl = document.querySelector('[data-contact-map-query]');
+  const fallback =
+    (card && card.getAttribute('data-fallback-query')) ||
+    (queryEl && queryEl.getAttribute('data-fallback')) ||
+    'Bursa';
+  applyLocationOnly({
+    mapQuery: fallback,
+    address: fallback,
+    mapLabel: 'Haritada Göster / Yol Tarifi'
+  });
 }
 
 function applyContent(c) {
@@ -20,7 +36,6 @@ function applyContent(c) {
   document.querySelectorAll('[data-brand]').forEach((el) => { el.textContent = brand; });
   document.querySelectorAll('[data-logo-mark]').forEach((el) => { el.textContent = mark; });
 
-  // Logo text: "Anadolu Tekstil" -> first word + em rest
   document.querySelectorAll('[data-logo-text]').forEach((el) => {
     const parts = brand.split(' ');
     if (parts.length > 1) {
@@ -39,10 +54,8 @@ function applyContent(c) {
   setText('[data-hero-badge-label]', c.hero?.badgeLabel);
 
   const heroCard = document.querySelector('[data-hero-image]');
-  if (heroCard) {
-    if (c.hero?.image) {
-      heroCard.innerHTML = `<img src="${c.hero.image}" alt="${brand}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
-    }
+  if (heroCard && c.hero?.image) {
+    heroCard.innerHTML = `<img src="${c.hero.image}" alt="${brand}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
   }
 
   setText('[data-about-eyebrow]', c.about?.eyebrow);
@@ -61,7 +74,6 @@ function applyContent(c) {
         <strong data-count="${s.value}">0</strong>
         <span>${escapeHtml(s.label)}</span>
       </div>`).join('');
-    // re-trigger counters if script supports it
     if (typeof window.resetAndAnimateCounters === 'function') {
       window.resetAndAnimateCounters();
     }
@@ -73,12 +85,19 @@ function applyContent(c) {
 
   const productsBox = document.querySelector('[data-products]');
   if (productsBox && Array.isArray(c.products?.items)) {
-    productsBox.innerHTML = c.products.items.map((p) => `
+    productsBox.innerHTML = c.products.items.map((p, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      const img = p.image
+        ? `<img class="product-thumb" src="${p.image}" alt="${escapeAttr(p.title)}">`
+        : '';
+      return `
       <article class="product-card ${p.featured ? 'featured' : ''} fade-in visible">
-        ${p.image ? `<img src="${p.image}" alt="${escapeAttr(p.title)}" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:14px;">` : `<div class="product-icon">${p.icon || '🧵'}</div>`}
+        ${img}
+        <span class="product-num">${num}</span>
         <h3>${escapeHtml(p.title)}</h3>
         <p>${escapeHtml(p.text)}</p>
-      </article>`).join('');
+      </article>`;
+    }).join('');
   }
 
   setText('[data-gallery-eyebrow]', c.gallery?.eyebrow);
@@ -110,54 +129,78 @@ function applyContent(c) {
   setText('[data-contact-phone]', c.contact?.phone);
   setText('[data-contact-email]', c.contact?.email);
   setText('[data-contact-hours]', c.contact?.hours);
-  setText('[data-contact-map-label]', c.contact?.mapLabel || 'Haritada Göster / Yol Tarifi');
   setText('[data-footer-text]', c.footer?.text);
 
-  // Konum: lat/lng varsa pin ile aç (share.google kısa linkleri telefonda pinsiz açılır)
-  const mapsUrl = buildMapsUrl(c.contact);
-  const locationCard = document.getElementById('locationCard');
-  if (locationCard && mapsUrl) {
-    locationCard.href = mapsUrl;
-    locationCard.setAttribute('data-maps-url', mapsUrl);
-  }
-  const mapEmbed = document.getElementById('mapEmbed');
-  if (mapEmbed) {
-    if (c.contact?.lat && c.contact?.lng) {
-      mapEmbed.src =
-        'https://www.google.com/maps?q=' +
-        encodeURIComponent(c.contact.lat + ',' + c.contact.lng) +
-        '&z=16&output=embed';
-    } else if (c.contact?.mapEmbed) {
-      mapEmbed.src = c.contact.mapEmbed;
-    } else if (c.contact?.address) {
-      mapEmbed.src =
-        'https://www.google.com/maps?q=' +
-        encodeURIComponent(c.contact.address) +
-        '&output=embed';
-    }
-  }
+  applyLocationOnly(c.contact || {});
 
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 }
 
-function buildMapsUrl(contact) {
-  if (!contact) return 'https://www.google.com/maps';
+function applyLocationOnly(contact) {
+  const display =
+    (contact.mapQuery || contact.address || '').toString().trim() || 'Konum';
+  setText('[data-contact-map-label]', contact.mapLabel || 'Haritada Göster / Yol Tarifi');
+  setText('[data-contact-map-query]', display);
+
+  const mapsUrl = buildMapsUrl(contact);
+  const locationCard = document.getElementById('locationCard');
+  if (locationCard) {
+    locationCard.href = mapsUrl;
+    locationCard.setAttribute('data-maps-url', mapsUrl);
+  }
+
+  const mapEmbed = document.getElementById('mapEmbed');
+  if (mapEmbed) {
+    const q = mapsQueryText(contact);
+    if (q) {
+      // Mobilde iframe bazen boş kalır; yine de doldur. Asıl tıklama ile Maps açılır.
+      mapEmbed.src =
+        'https://maps.google.com/maps?q=' + encodeURIComponent(q) + '&z=16&output=embed';
+    }
+  }
+}
+
+/** "40°13'59.7\"N 28°59'11.2\"E" veya "40.23325, 28.98644" -> {lat,lng} */
+function parseLatLng(text) {
+  if (!text) return null;
+  const s = String(text).trim();
+
+  // Ondalık: 40.233, 28.986
+  let m = s.match(/^(-?\d+(?:\.\d+)?)\s*[,;\s]\s*(-?\d+(?:\.\d+)?)$/);
+  if (m) return { lat: m[1], lng: m[2] };
+
+  // Derece formatı: 40°13'59.7"N 28°59'11.2"E
+  const dms =
+    /(-?\d+)[°\s]+(\d+)['′\s]+(\d+(?:\.\d+)?)["″]?\s*([NSns])?\s*[,\s]*(-?\d+)[°\s]+(\d+)['′\s]+(\d+(?:\.\d+)?)["″]?\s*([EWew])?/;
+  m = s.match(dms);
+  if (m) {
+    let lat = Number(m[1]) + Number(m[2]) / 60 + Number(m[3]) / 3600;
+    let lng = Number(m[5]) + Number(m[6]) / 60 + Number(m[7]) / 3600;
+    if ((m[4] || '').toUpperCase() === 'S') lat = -Math.abs(lat);
+    if ((m[8] || '').toUpperCase() === 'W') lng = -Math.abs(lng);
+    return { lat: String(lat), lng: String(lng) };
+  }
+  return null;
+}
+
+function mapsQueryText(contact) {
+  if (!contact) return '';
   const lat = (contact.lat || '').toString().trim();
   const lng = (contact.lng || '').toString().trim();
-  if (lat && lng) {
-    // Telefonda Google Haritalar uygulamasında pin açan format
-    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(lat + ',' + lng);
-  }
-  const url = (contact.mapUrl || '').trim();
-  // share.google / kısa linkler telefonda genelde konum pinsiz açılır
-  if (url && !/share\.google|maps\.app\.goo\.gl/i.test(url)) {
-    return url;
-  }
-  if (contact.address) {
-    return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(contact.address);
-  }
-  return url || 'https://www.google.com/maps';
+  if (lat && lng) return lat + ',' + lng;
+
+  const raw = (contact.mapQuery || contact.address || '').toString().trim();
+  const parsed = parseLatLng(raw);
+  if (parsed) return parsed.lat + ',' + parsed.lng;
+  return raw;
+}
+
+function buildMapsUrl(contact) {
+  const q = mapsQueryText(contact);
+  if (!q) return 'https://www.google.com/maps';
+  // Telefonda Google Haritalar uygulamasında pin açmak için
+  return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q);
 }
 
 function setText(sel, val) {
@@ -169,10 +212,55 @@ function setHtml(sel, val) {
   document.querySelectorAll(sel).forEach((el) => { el.innerHTML = val; });
 }
 function escapeHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 function escapeAttr(s) {
   return String(s).replace(/"/g, '&quot;');
 }
 
-document.addEventListener('DOMContentLoaded', loadSite);
+document.addEventListener('DOMContentLoaded', () => {
+  loadSite();
+
+  // Mobilde tıklanınca kesin Maps'e gitsin (href güncellenmese bile)
+  const locationCard = document.getElementById('locationCard');
+  if (locationCard) {
+    locationCard.addEventListener('click', (e) => {
+      const url =
+        locationCard.getAttribute('data-maps-url') ||
+        locationCard.href ||
+        '';
+      if (!url || url === '#' || url.endsWith('/maps') || url.includes('about:blank')) {
+        e.preventDefault();
+        const q =
+          document.querySelector('[data-contact-map-query]')?.textContent?.trim() ||
+          locationCard.getAttribute('data-fallback-query') ||
+          'Bursa';
+        if (q === 'Konum yükleniyor...') {
+          window.open(
+            'https://www.google.com/maps/search/?api=1&query=' +
+              encodeURIComponent(locationCard.getAttribute('data-fallback-query') || 'Bursa'),
+            '_blank'
+          );
+          return;
+        }
+        window.open(
+          'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q),
+          '_blank'
+        );
+        return;
+      }
+      // Normal link çalışsın; sorunluysa zorla aç
+      if (/share\.google|about:blank/i.test(url)) {
+        e.preventDefault();
+        const q =
+          document.querySelector('[data-contact-map-query]')?.textContent?.trim() ||
+          locationCard.getAttribute('data-fallback-query') ||
+          'Bursa';
+        window.open(
+          'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q),
+          '_blank'
+        );
+      }
+    });
+  }
+});

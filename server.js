@@ -62,7 +62,14 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename(req, file, cb) {
-    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
+    let ext = path.extname(file.originalname || '').toLowerCase();
+    if (!ext) {
+      if (file.mimetype === 'image/png') ext = '.png';
+      else if (file.mimetype === 'image/webp') ext = '.webp';
+      else if (file.mimetype === 'image/gif') ext = '.gif';
+      else if (file.mimetype === 'image/heic' || file.mimetype === 'image/heif') ext = '.heic';
+      else ext = '.jpg';
+    }
     const safe = Date.now() + '-' + Math.round(Math.random() * 1e6) + ext;
     cb(null, safe);
   }
@@ -70,10 +77,13 @@ const storage = multer.diskStorage({
 
 const upload = multer({
   storage,
-  limits: { fileSize: 8 * 1024 * 1024 },
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20 MB — telefon fotoğrafları için
   fileFilter(req, file, cb) {
-    const ok = /\.(jpe?g|png|webp|gif)$/i.test(file.originalname);
-    cb(ok ? null : new Error('Sadece görsel dosyaları yüklenebilir (jpg, png, webp, gif)'), ok);
+    // Uzantı + MIME; iPhone HEIC ve uzantısız dosyalar da kabul
+    const byExt = /\.(jpe?g|png|webp|gif|heic|heif|bmp|jfif)$/i.test(file.originalname || '');
+    const byMime = /^image\//i.test(file.mimetype || '');
+    if (byExt || byMime) return cb(null, true);
+    cb(new Error('Sadece görsel yüklenebilir (jpg, png, webp, gif, heic)'));
   }
 });
 

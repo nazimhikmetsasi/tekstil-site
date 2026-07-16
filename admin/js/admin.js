@@ -121,9 +121,9 @@ function fillForms() {
   $('#contact_instagram').value = c.contact.instagram || '';
   $('#contact_linkedin').value = c.contact.linkedin || '';
   $('#contact_facebook').value = c.contact.facebook || '';
+  $('#contact_mapQuery').value = c.contact.mapQuery || c.contact.address || '';
   $('#contact_lat').value = c.contact.lat || '';
   $('#contact_lng').value = c.contact.lng || '';
-  $('#contact_mapUrl').value = c.contact.mapUrl || '';
   $('#contact_mapLabel').value = c.contact.mapLabel || '';
   $('#footer_text').value = c.footer.text || '';
   $('#site_brand').value = c.site.brand || '';
@@ -169,7 +169,6 @@ function renderProducts() {
         <button type="button" class="btn btn-danger btn-sm" data-del-product="${i}">Sil</button>
       </div>
       <div class="grid-2">
-        <div class="form-group"><label>İkon (emoji)</label><input data-p-icon="${i}" value="${escapeAttr(p.icon || '')}"></div>
         <div class="form-group"><label>Öne çıkan kart</label>
           <select data-p-featured="${i}">
             <option value="false" ${!p.featured ? 'selected' : ''}>Hayır</option>
@@ -249,6 +248,22 @@ function escapeHtml(s) {
   return String(s).replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+function parseDmsToLatLng(text) {
+  if (!text) return null;
+  const s = String(text).trim();
+  let m = s.match(/^(-?\d+(?:\.\d+)?)\s*[,;\s]\s*(-?\d+(?:\.\d+)?)$/);
+  if (m) return { lat: m[1], lng: m[2] };
+  const dms =
+    /(-?\d+)[°\s]+(\d+)['′\s]+(\d+(?:\.\d+)?)["″]?\s*([NSns])?\s*[,\s]*(-?\d+)[°\s]+(\d+)['′\s]+(\d+(?:\.\d+)?)["″]?\s*([EWew])?/;
+  m = s.match(dms);
+  if (!m) return null;
+  let lat = Number(m[1]) + Number(m[2]) / 60 + Number(m[3]) / 3600;
+  let lng = Number(m[5]) + Number(m[6]) / 60 + Number(m[7]) / 3600;
+  if ((m[4] || '').toUpperCase() === 'S') lat = -Math.abs(lat);
+  if ((m[8] || '').toUpperCase() === 'W') lng = -Math.abs(lng);
+  return { lat: String(+lat.toFixed(6)), lng: String(+lng.toFixed(6)) };
+}
+
 /* ---------- Collect from forms ---------- */
 function collectFromForms() {
   content.hero.eyebrow = $('#hero_eyebrow').value;
@@ -272,7 +287,7 @@ function collectFromForms() {
   content.products.subtitle = $('#products_subtitle').value;
   content.products.items = (content.products.items || []).map((p, i) => ({
     ...p,
-    icon: $(`[data-p-icon="${i}"]`)?.value || p.icon,
+    icon: '',
     title: $(`[data-p-title="${i}"]`)?.value || p.title,
     text: $(`[data-p-text="${i}"]`)?.value || p.text,
     featured: $(`[data-p-featured="${i}"]`)?.value === 'true'
@@ -296,23 +311,34 @@ function collectFromForms() {
   content.contact.instagram = $('#contact_instagram').value;
   content.contact.linkedin = $('#contact_linkedin').value;
   content.contact.facebook = $('#contact_facebook').value;
+  content.contact.mapQuery = ($('#contact_mapQuery').value || '').trim();
+  // Konum boşsa adres alanını kullan (istediği yeri yazabilsin)
+  if (!content.contact.mapQuery && content.contact.address) {
+    content.contact.mapQuery = content.contact.address.trim();
+  }
   content.contact.lat = ($('#contact_lat').value || '').trim();
   content.contact.lng = ($('#contact_lng').value || '').trim();
   content.contact.mapLabel = $('#contact_mapLabel').value;
-  // Lat/lng varsa telefonda pin açan güvenilir link üret
-  if (content.contact.lat && content.contact.lng) {
-    const q = encodeURIComponent(content.contact.lat + ',' + content.contact.lng);
+
+  // Derece formatı (40°13'59.7"N ...) yazıldıysa otomatik ondalığa çevir
+  const parsed = parseDmsToLatLng(content.contact.mapQuery);
+  if (parsed && !content.contact.lat && !content.contact.lng) {
+    content.contact.lat = parsed.lat;
+    content.contact.lng = parsed.lng;
+  }
+
+  const queryText =
+    (content.contact.lat && content.contact.lng)
+      ? content.contact.lat + ',' + content.contact.lng
+      : (content.contact.mapQuery || content.contact.address || '');
+
+  if (queryText) {
+    const q = encodeURIComponent(queryText);
     content.contact.mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + q;
-    content.contact.mapEmbed =
-      'https://www.google.com/maps?q=' + q + '&z=16&output=embed';
+    content.contact.mapEmbed = 'https://maps.google.com/maps?q=' + q + '&z=16&output=embed';
   } else {
-    content.contact.mapUrl = $('#contact_mapUrl').value;
-    if (content.contact.address) {
-      content.contact.mapEmbed =
-        'https://www.google.com/maps?q=' +
-        encodeURIComponent(content.contact.address) +
-        '&output=embed';
-    }
+    content.contact.mapUrl = '';
+    content.contact.mapEmbed = '';
   }
   content.footer.text = $('#footer_text').value;
   content.site.brand = $('#site_brand').value;
@@ -333,7 +359,7 @@ $('#addProduct').addEventListener('click', () => {
   collectFromForms();
   content.products.items.push({
     id: 'p' + Date.now(),
-    icon: '🧵',
+    icon: '',
     title: 'Yeni Ürün',
     text: 'Açıklama yazın...',
     featured: false,
@@ -344,15 +370,18 @@ $('#addProduct').addEventListener('click', () => {
 
 /* ---------- Uploads ---------- */
 async function uploadFile(file, folder) {
+  if (!file) throw new Error('Dosya seçilmedi');
+  // Bazı telefonlar image/* dışında seçim engelleyebilir; yine de dene
   const fd = new FormData();
-  fd.append('file', file);
-  const res = await fetch('/api/upload?folder=' + folder, {
+  fd.append('file', file, file.name || ('foto-' + Date.now() + '.jpg'));
+  const res = await fetch('/api/upload?folder=' + encodeURIComponent(folder), {
     method: 'POST',
     credentials: 'same-origin',
     body: fd
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error || 'Yükleme başarısız');
+  let data = {};
+  try { data = await res.json(); } catch (_) {}
+  if (!res.ok) throw new Error(data.error || ('Yükleme başarısız (' + res.status + ')'));
   return data.url;
 }
 
